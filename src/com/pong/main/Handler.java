@@ -14,11 +14,21 @@ public class Handler {
 	}
 
 	public void tick() {
-		for(int i = 0; i<objects.size();i++)
-		{
-			objects.get(i).tick();
+		if(!(gamerun.gamestate == GameRun.GameState.Paused)) {
+			for(int i = 0; i<objects.size();i++)
+			{
+				objects.get(i).tick();
+			}
+			gamerun.tick();
+		} else {
+			for(int i = 0; i<objects.size();i++)
+			{
+				if(objects.get(i).getId() != ID.Ball && objects.get(i).getId() != ID.Player && objects.get(i).getId() != ID.Immobilizer) {
+					objects.get(i).tick();
+				}
+			}
+			gamerun.tick();
 		}
-		gamerun.tick();
 	}
 
 	public void render(Graphics g) {
@@ -27,7 +37,7 @@ public class Handler {
 		{
 			objects.get(i).render(g);
 		}
-		if(gamerun.gamestate == GameRun.GameState.Game)
+		if(gamerun.gamestate == GameRun.GameState.Game || gamerun.gamestate == GameRun.GameState.Paused || gamerun.gamestate == GameRun.GameState.GameEnd)
 		{
 			hud.render(g);
 		}

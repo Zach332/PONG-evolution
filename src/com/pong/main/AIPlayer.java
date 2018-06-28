@@ -29,11 +29,12 @@ public class AIPlayer extends Player{
 			}
 		}
 		Ball ball = null;
-		int highest = 0;
+		int highest = Integer.MIN_VALUE;
 		int highestIndex = -1;
 		for(int i = 0; i < balls.size(); i++) {
-			if(balls.get(i).getX() > highest) {
-				highest = balls.get(i).getX();
+			int place = balls.get(i).getX() * balls.get(i).getVelX();
+			if(place > highest) {
+				highest = place;
 				highestIndex = i;
 			}
 		}

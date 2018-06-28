@@ -150,9 +150,6 @@ public class EvolvedTicker {
 	 * change ball size DONE
 	 * extra ball DONE
 	 * 
-	 * checking tracking
-	 * fix velx and 2 ais
-	 * 
 	 */
 
 }

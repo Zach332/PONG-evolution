@@ -15,6 +15,7 @@ public class GameRun {
 		PlayerTypeMenu,
 		GameTypeMenu,
 		Game,
+		Paused,
 		GameEnd;
 	}
 	
@@ -51,13 +52,14 @@ public class GameRun {
 		new GameTypeButton(is2Player,600, 420, 90, "Evolved", "Dialog ITALIC", 100, Color.BLUE, handler, this);
 		
 		gamestate = GameState.GameTypeMenu;
+		
 	}
 	
 	public void initializeGame(boolean is2Player) {
 		handler.removeAll();
-		new Player1(30,30,5,100,handler);
-		if(is2Player) {new Player2(Game.WIDTH - 30, 30,5,100,handler);}
-		else{new AIPlayer(Game.WIDTH - 30, 30,5,100,handler);}
+		new Player1(30,Game.HEIGHT/2 - 50,5,100,handler);
+		if(is2Player) {new Player2(Game.WIDTH - 30, Game.HEIGHT/2 - 50,5,100,handler);}
+		else{new AIPlayer(Game.WIDTH - 30, Game.HEIGHT/2 - 50,5,100,handler);}
 		if(Game.r.nextInt(2) == 1) {
 			new Ball(Game.WIDTH/4, Game.HEIGHT/2, 8, Game.r.nextInt(8)-4, 10, handler);
 		}
@@ -80,6 +82,9 @@ public class GameRun {
 		{
 			evolvedTicker = new EvolvedTicker(handler, player1, player2, this);
 		}
+		new PauseButton(Game.WIDTH-55, 45, 40, 38, "l l", "Impact", 40, Color.WHITE, handler, this);
+		
+		
 		
 	}
 	
@@ -90,6 +95,7 @@ public class GameRun {
 		new PlayerTypeButton(400, 400, 90, "1 Player", "Impact", 100, handler, this);
 		new PlayerTypeButton(600, 400, 90, "2 Player", "Impact", 100, handler, this);
 		gamestate = GameState.PlayerTypeMenu;
+		
 	}
 	
 	
@@ -98,7 +104,7 @@ public class GameRun {
 
 		if(gamestate == GameState.Game)
 		{
-			if(gametype ==  GameType.Evolved) {
+			if(gametype ==  GameType.Evolved && gamestate != GameState.Paused && gamestate !=  GameState.GameEnd) {
 				evolvedTicker.evolvedTick();
 			} else {
 				removeOutsideBalls();
@@ -112,6 +118,7 @@ public class GameRun {
 					}
 				}
 				new MenuButton(400, 290, 90, "Menu", "Impact", 100, handler, this);
+				gamestate = GameState.GameEnd;
 				if(player1.getScore() >=10)
 				{
 					new Text("Player 1 wins", Game.WIDTH/2 -240, 250, "Impact", 80, Color.WHITE, handler);

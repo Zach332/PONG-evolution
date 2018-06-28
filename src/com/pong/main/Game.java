@@ -97,3 +97,10 @@ public class Game extends Canvas implements Runnable {
 	}
 
 }
+
+/*
+ * TODO list
+ * back button
+ * 
+ * 
+ */
